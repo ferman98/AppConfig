@@ -14,8 +14,11 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
     }
 
     private fun addTrackingButton() {
-        val fab = TrackingButton(this)
-        fab.init(this)
-        findViewById<FrameLayout>(android.R.id.content).addView(fab)
+        val container = findViewById<FrameLayout>(android.R.id.content)
+        if (container.findViewById<TrackingButton>(R.id.btnTracking) == null) {
+            val fab = TrackingButton(this)
+            fab.init(this)
+            container.addView(fab)
+        }
     }
 }
