@@ -5,7 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import io.github.ferman98.appconfig.view.component.TrackingButton
 
-class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutId: Int = 0) :
+open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutId: Int = 0) :
     AppCompatActivity(contentLayoutId) {
 
     override fun onResume() {
