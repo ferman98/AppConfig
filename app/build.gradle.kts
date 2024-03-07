@@ -39,7 +39,6 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
-    implementation(libs.androidx.activity)
     implementation(libs.androidx.view.constraintlayout)
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.junitAndroid)
