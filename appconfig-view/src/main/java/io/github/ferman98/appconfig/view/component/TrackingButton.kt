@@ -36,7 +36,8 @@ internal class TrackingButton @JvmOverloads constructor(
     private var dY = 0F
 
     init {
-        setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bike_24))
+        id = R.id.btnTracking
+        setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_phonesetting_24))
         elevation = 100F
         setPaddingRelative(
             resources.getDimensionPixelOffset(R.dimen.x6),
