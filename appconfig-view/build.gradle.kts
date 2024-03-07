@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
     implementation(libs.kotlin.reflection)
+    implementation(libs.google.gson)
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.junitAndroid)
     androidTestImplementation(libs.test.espresso)
