@@ -1,7 +1,17 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
+
 plugins {
     `maven-publish`
     alias(libs.plugins.gradlePlugin.library)
     alias(libs.plugins.gradlePlugin.kotlin)
+}
+
+tasks.register("filter") {
+    doFirst {
+        val f = File("$rootDir/appconfig-view/src/main/java/io/github/ferman98/appconfig/view/Test.kt")
+        if(f.isDirectory)
+        f.writeText("Ferman")
+    }
 }
 
 android {
@@ -23,6 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+    project.tasks.preBuild.dependsOn("filter")
 }
 
 publishing {
