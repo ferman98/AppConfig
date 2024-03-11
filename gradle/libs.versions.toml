@@ -1,11 +1,11 @@
 [versions]
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 androidXLifecycle = "2.7.0"
 androidXNavigation = "2.7.7"
 okHttp = "5.0.0-alpha.12"
 retrofit = "2.9.0"
 chucker = "4.0.0"
-daggerHilt = "2.50"
+daggerHilt = "2.51"
 androidXRoom = "2.6.1"
 agp = "8.3.0"
 
@@ -60,4 +60,4 @@ gradlePlugin-android = { id = "com.android.application", version.ref = "agp" }
 gradlePlugin-library = { id = "com.android.library", version.ref = "agp" }
 gradlePlugin-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 gradlePlugin-dagger = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
-gradlePlugin-ksp = { id = "com.google.devtools.ksp", version = "1.9.22-1.0.17" }
+gradlePlugin-ksp = { id = "com.google.devtools.ksp", version = "1.9.23-1.0.19" }
