@@ -8,9 +8,12 @@ plugins {
 
 tasks.register("filter") {
     doFirst {
-        val f = File("$rootDir/appconfig-view/src/main/java/io/github/ferman98/appconfig/view/Test.kt")
-        if(f.isDirectory)
-        f.writeText("Ferman")
+        File("$rootDir/appconfig-view/src/main/java/io/github/ferman98/appconfig/view/Test.kt").apply {
+            val str = readText()
+            val regex = "(.+fun )([\\w|\\d]+)(.+)".toRegex()
+            val newStr = str.replace(regex, "\$1\$2\$3\nandroid.util.Log.e(\"FUNCTION\", \"\$2\")")
+            writeText(newStr)
+        }
     }
 }
 
