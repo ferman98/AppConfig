@@ -1,17 +1,15 @@
-package io.github.ferman98.appconfig.view.component
+package io.github.ferman98.appconfig.component
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.github.ferman98.appconfig.view.R
+import io.github.ferman98.appconfig.R
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -46,20 +44,7 @@ internal class TrackingButton @JvmOverloads constructor(
             resources.getDimensionPixelOffset(R.dimen.x3),
         )
         setBackgroundColor(Color.BLUE)
-    }
-
-    fun init(app: AppCompatActivity) {
         setOnTouchListener(this)
-        setOnClickListener {
-            var listVariable = ""
-            app.componentName.className.also { className ->
-                Log.e("TRACKING", className + " - " + app.getActiveFragment())
-            }
-            app::class.members.forEach {
-                listVariable += it.name + ", "
-            }
-            Log.e("TRACKING", listVariable)
-        }
     }
 
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
@@ -117,18 +102,5 @@ internal class TrackingButton @JvmOverloads constructor(
         params?.width = ViewGroup.LayoutParams.WRAP_CONTENT
         params?.height = ViewGroup.LayoutParams.WRAP_CONTENT
         super.setLayoutParams(params)
-    }
-
-    private fun AppCompatActivity.getActiveFragment(): String {
-        var fragmentName = "Null"
-        this
-            .supportFragmentManager
-            .fragments
-            .forEach {
-                if (it.isVisible) {
-                    fragmentName = it.javaClass.name ?: "Null"
-                }
-            }
-        return fragmentName
     }
 }
