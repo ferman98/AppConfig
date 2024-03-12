@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
+
 plugins {
     alias(libs.plugins.gradlePlugin.library)
     alias(libs.plugins.gradlePlugin.kotlin)
@@ -22,14 +24,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
-    project.tasks.preBuild.dependsOn("filter")
     buildFeatures {
         viewBinding = true
     }
 }
 
 dependencies {
-    implementation(project(":appconfig-internal"))
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.material)

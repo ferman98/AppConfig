@@ -35,16 +35,18 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
                     listVariable += it.name + ", "
                 }
                 Log.e("TRACKING", listVariable)
-                container.addView(detailPage())
+                container.addDetailView()
             }
             container.addView(fab)
         }
     }
 
-    private fun detailPage(): DetailView {
-        val d = DetailView(this)
-        d.init(this)
-        return d
+    private fun FrameLayout.addDetailView() {
+        if (this.findViewById<TrackingButton>(R.id.viewDetail) == null) {
+            val d = DetailView(this@AppConfigActivity)
+            d.init(this@AppConfigActivity)
+            addView(d)
+        }
     }
 
     private fun getAllExtras() {
