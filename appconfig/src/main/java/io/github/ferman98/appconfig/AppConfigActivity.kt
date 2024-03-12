@@ -1,4 +1,4 @@
-package io.github.ferman98.appconfig.view
+package io.github.ferman98.appconfig
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,8 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
-import io.github.ferman98.appconfig.view.component.TrackingButton
+import io.github.ferman98.appconfig.component.TrackingButton
+import io.github.ferman98.appconfig.component.detail.DetailView
 
 open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutId: Int = 0) :
     AppCompatActivity(contentLayoutId) {
@@ -25,9 +26,25 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
         val container = findViewById<FrameLayout>(android.R.id.content)
         if (container.findViewById<TrackingButton>(R.id.btnTracking) == null) {
             val fab = TrackingButton(this)
-            fab.init(this)
+            fab.setOnClickListener {
+                var listVariable = ""
+                componentName.className.also { className ->
+                    Log.e("TRACKING", className + " - " + getActiveFragment())
+                }
+                this::class.members.forEach {
+                    listVariable += it.name + ", "
+                }
+                Log.e("TRACKING", listVariable)
+                container.addView(detailPage())
+            }
             container.addView(fab)
         }
+    }
+
+    private fun detailPage(): DetailView {
+        val d = DetailView(this)
+        d.init(this)
+        return d
     }
 
     private fun getAllExtras() {
@@ -38,5 +55,18 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
             }
         }
         Log.e("TRACKING", "INTENT = " + Gson().toJson(listIntent))
+    }
+
+    private fun getActiveFragment(): String {
+        var fragmentName = "Null"
+        this
+            .supportFragmentManager
+            .fragments
+            .forEach {
+                if (it.isVisible) {
+                    fragmentName = it.javaClass.name ?: "Null"
+                }
+            }
+        return fragmentName
     }
 }

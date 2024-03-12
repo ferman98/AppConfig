@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "App Config"
 include(":app")
 include(":appconfig-internal")
-include(":appconfig-view")
+include(":appconfig")

@@ -8,6 +8,8 @@ chucker = "4.0.0"
 daggerHilt = "2.51"
 androidXRoom = "2.6.1"
 agp = "8.3.0"
+legacySupportV4 = "1.0.0"
+fragmentKtx = "1.5.6"
 
 [libraries]
 # Jetpack
@@ -54,6 +56,8 @@ kotlin-reflection = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", v
 test-junit = { group = "junit", name = "junit", version = "4.13.2" }
 test-junitAndroid = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
 test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 
 [plugins]
 gradlePlugin-android = { id = "com.android.application", version.ref = "agp" }

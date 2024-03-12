@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.ferman98.appconfig.view"
+    namespace = "io.github.ferman98.appconfig"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
@@ -22,6 +22,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+    project.tasks.preBuild.dependsOn("filter")
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -31,6 +35,11 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.kotlin.reflection)
     implementation(libs.google.gson)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.view.constraintlayout)
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.junitAndroid)
     androidTestImplementation(libs.test.espresso)
