@@ -72,9 +72,12 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
         val data = mutableMapOf<String, String>()
         this::class.declaredMemberProperties
             .forEach { p ->
-                data[p.name] = this::class.java.getDeclaredField(p.name).run {
-                    isAccessible = true
-                    get(this@getVariable)?.toString() ?: "null"
+                try {
+                    data[p.name] = this::class.java.getDeclaredField(p.name).run {
+                        isAccessible = true
+                        get(this@getVariable)?.toString() ?: "null"
+                    }
+                } catch (_: Exception) {
                 }
             }
         return data
