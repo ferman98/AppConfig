@@ -68,15 +68,15 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
         Constants.DataAppConfig.activityIntentExtras = listIntent
     }
 
-    private fun Any.getVariable(): Map<String, String> {
-        val prop = this::class.declaredMemberProperties
+    private fun <T : Any> T.getVariable(): Map<String, String> {
         val data = mutableMapOf<String, String>()
-        prop.forEach { p ->
-            data[p.name] = prop
-                .first { it.name == p.name }
-                .call(this)
-                .toString()
-        }
+        this::class.declaredMemberProperties
+            .forEach { p ->
+                data[p.name] = this::class.java.getDeclaredField(p.name).run {
+                    isAccessible = true
+                    get(this@getVariable)?.toString() ?: "null"
+                }
+            }
         return data
     }
 

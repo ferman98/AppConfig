@@ -29,9 +29,10 @@ class DetailActivityFragment : Fragment() {
     }
 
     private fun setLayoutListener() {
-        binding.llMain.addView(setDataTitle())
-        binding.llMain.addView(setDataIntent())
-        binding.llMain.addView(setDataVariable())
+        binding.llMain.removeAllViews()
+        binding.llMain.addView(setDataTitle(), 0)
+        binding.llMain.addView(setDataIntent(), 1)
+        binding.llMain.addView(setDataVariable(), 2)
     }
 
     private fun setDataTitle(): TreeView {
