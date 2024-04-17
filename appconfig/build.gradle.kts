@@ -22,19 +22,16 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-    project.tasks.preBuild.dependsOn("filter")
     buildFeatures {
         viewBinding = true
     }
 }
 
 dependencies {
-    implementation(project(":appconfig-internal"))
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
     implementation(libs.kotlin.reflection)
-    implementation(libs.google.gson)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.viewmodel)

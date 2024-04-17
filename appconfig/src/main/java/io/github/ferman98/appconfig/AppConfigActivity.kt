@@ -1,13 +1,14 @@
 package io.github.ferman98.appconfig
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
+import androidx.fragment.app.Fragment
 import io.github.ferman98.appconfig.component.TrackingButton
 import io.github.ferman98.appconfig.component.detail.DetailView
+import kotlin.reflect.full.declaredMemberProperties
 
 open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutId: Int = 0) :
     AppCompatActivity(contentLayoutId) {
@@ -27,24 +28,34 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
         if (container.findViewById<TrackingButton>(R.id.btnTracking) == null) {
             val fab = TrackingButton(this)
             fab.setOnClickListener {
-                var listVariable = ""
-                componentName.className.also { className ->
-                    Log.e("TRACKING", className + " - " + getActiveFragment())
+                val frag = getActiveFragment()
+                val activityProp = this.getVariable()
+                val fragmentProp = frag?.getVariable() ?: mapOf()
+                Constants.DataAppConfig.activityName = componentName.className
+                Constants.DataAppConfig.activityVariable = activityProp
+                Constants.DataAppConfig.fragmentName = frag?.javaClass?.name ?: "null"
+                Constants.DataAppConfig.fragmentVariable = fragmentProp
+
+                fab.visibility = View.INVISIBLE
+                container.addDetailView()?.also {
+                    it.setOnCloseListener { _ ->
+                        container.removeView(it)
+                        fab.visibility = View.VISIBLE
+                    }
                 }
-                this::class.members.forEach {
-                    listVariable += it.name + ", "
-                }
-                Log.e("TRACKING", listVariable)
-                container.addView(detailPage())
             }
             container.addView(fab)
         }
     }
 
-    private fun detailPage(): DetailView {
-        val d = DetailView(this)
-        d.init(this)
-        return d
+    private fun FrameLayout.addDetailView(): DetailView? {
+        if (this.findViewById<TrackingButton>(R.id.viewDetail) == null) {
+            val d = DetailView(this@AppConfigActivity)
+            d.init(this@AppConfigActivity)
+            this.addView(d)
+            return d
+        }
+        return null
     }
 
     private fun getAllExtras() {
@@ -54,19 +65,28 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
                 listIntent[key] = it.getString(key) ?: ""
             }
         }
-        Log.e("TRACKING", "INTENT = " + Gson().toJson(listIntent))
+        Constants.DataAppConfig.activityIntentExtras = listIntent
     }
 
-    private fun getActiveFragment(): String {
-        var fragmentName = "Null"
-        this
-            .supportFragmentManager
-            .fragments
-            .forEach {
-                if (it.isVisible) {
-                    fragmentName = it.javaClass.name ?: "Null"
+    private fun <T : Any> T.getVariable(): Map<String, String> {
+        val data = mutableMapOf<String, String>()
+        this::class.declaredMemberProperties
+            .forEach { p ->
+                try {
+                    data[p.name] = this::class.java.getDeclaredField(p.name).run {
+                        isAccessible = true
+                        get(this@getVariable)?.toString() ?: "null"
+                    }
+                } catch (_: Exception) {
                 }
             }
-        return fragmentName
+        return data
+    }
+
+    private fun getActiveFragment(): Fragment? {
+        return this
+            .supportFragmentManager
+            .fragments
+            .find { it.isVisible }
     }
 }
