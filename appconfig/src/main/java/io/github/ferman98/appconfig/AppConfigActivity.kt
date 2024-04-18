@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import io.github.ferman98.appconfig.component.TrackingButton
 import io.github.ferman98.appconfig.component.detail.DetailView
-import kotlin.reflect.full.declaredMemberProperties
 
 open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutId: Int = 0) :
     AppCompatActivity(contentLayoutId) {
@@ -70,10 +69,10 @@ open class AppConfigActivity @JvmOverloads constructor(@LayoutRes contentLayoutI
 
     private fun <T : Any> T.getVariable(): Map<String, String> {
         val data = mutableMapOf<String, String>()
-        this::class.declaredMemberProperties
+        this.javaClass.declaredFields
             .forEach { p ->
                 try {
-                    data[p.name] = this::class.java.getDeclaredField(p.name).run {
+                    data[p.name] = this.javaClass.getDeclaredField(p.name).run {
                         isAccessible = true
                         get(this@getVariable)?.toString() ?: "null"
                     }
