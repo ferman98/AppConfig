@@ -48,9 +48,6 @@ room-chiper = { group = "net.zetetic", name = "android-database-sqlcipher", vers
 dagger-core = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerHilt" }
 dagger-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "daggerHilt" }
 
-# Kotlin
-kotlin-reflection = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
-
 # Test
 test-junit = { group = "junit", name = "junit", version = "4.13.2" }
 test-junitAndroid = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
